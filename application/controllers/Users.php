@@ -22,6 +22,7 @@ class Users extends RestController
     
     public function index_post($id = 0)
     {
+        $jwt= new JWT();
         $users = $this->model_user;
         $data = [
             'nom' =>  $this->post('nom'),
@@ -33,9 +34,14 @@ class Users extends RestController
         $result = $users->insert_user($data);
         if($result > 0)
         {
+            $data['id'] = $users->lastInsert();
+            $jwtSecretKey="Mysecretwordshere" ;
+            unset($data['password']);
+            $token = $jwt ->encode($data, $jwtSecretKey,'HS256');
             $this->response([
                 'status' => true,
-                'message' => 'UTILISATEUR CREE'
+                'message' => 'UTILISATEUR CREE',
+                'token' => $token
             ], RestController::HTTP_OK); 
         }
         else
@@ -57,25 +63,6 @@ class Users extends RestController
             'password' =>password_hash($this->put('password'),PASSWORD_DEFAULT),
             'admin' => 0
         ];
-        /* your condition here 
-$con['email'] = $email;
-$con['admin'] = 1; or whatever you set in $con
-*/
-// $checkLogin = $this->user->getRows($con);
-// if($checkLogin)
-// {
-//     if (password_verify($password,$checkLogin['password']))
-//     {
-//         $this->session->set_userdata('isUserLoggedIn',TRUE);
-//         $this->session->set_userdata('userId',$checkLogin['id']);
-//         redirect('users/account');
-//     }
-
-// }
-// else
-// {
-//      $data['error_msg'] = 'Wrong email or password, please try again.';
-// }
         
         $users->update_user($data, $id);
         $this->response([
@@ -105,8 +92,9 @@ $con['admin'] = 1; or whatever you set in $con
             ], RestController::HTTP_BAD_REQUEST);
         }
     }
-    public function user_get()
+    public function user_post()
     {
+        $jwt= new JWT();
         $email = $this->put('email');
         $password = $this->put('password');
 
@@ -116,7 +104,10 @@ $con['admin'] = 1; or whatever you set in $con
         {
             if(password_verify($password, $user['password']))
             {
-                 
+                $jwtSecretKey="Mysecretwordshere" ;
+                unset($user['password']);
+                $token = $jwt->encode($user, $jwtSecretKey,'HS256');
+                $this->response(['token' => $token]);
             }
             else
             {

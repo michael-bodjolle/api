@@ -14,7 +14,9 @@ class model_user extends CI_Model
     {
         return $this->db->insert('users', $data);
     }
-
+    public function lastInsert(){
+        return $this->db->insert_id();
+    }
     public function edit_user($id)
     {
         $this->db->where('id',$id);
