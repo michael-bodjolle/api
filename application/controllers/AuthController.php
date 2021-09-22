@@ -12,7 +12,6 @@ class AuthController extends CI_Controller {
 public function token (){
 $jwt= new JWT();
 $jwtSecretKey="Mysecretwordshere" ;
-
 $data= array(
     'userID' => 145,
     'email'=> 'admin@gmail.com',
