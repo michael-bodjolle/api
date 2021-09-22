@@ -115,6 +115,9 @@ class JWT
 			throw new DomainException('Null result with non-null input');
 		}
 		return $obj;
+
+    
+        
 	}
 	/**
 	 * Encode a PHP object into a JSON string.
