@@ -19,10 +19,10 @@ class Users extends RestController
     }
     
     // insert
-    
+// create
     public function index_post($id = 0)
     {
-        $jwt= new JWT();
+        // $jwt= new JWT();
         $users = $this->model_user;
         $data = [
             'nom' =>  $this->post('nom'),
@@ -35,13 +35,13 @@ class Users extends RestController
         if($result > 0)
         {
             $data['id'] = $users->lastInsert();
-            $jwtSecretKey="Mysecretwordshere" ;
+            // $jwtSecretKey="Mysecretwordshere" ;
             unset($data['password']);
-            $token = $jwt ->encode($data, $jwtSecretKey,'HS256');
+            // $token = $jwt ->encode($data, $jwtSecretKey,'HS256');
             $this->response([
                 'status' => true,
                 'message' => 'UTILISATEUR CREE',
-                'token' => $token
+                // 'token' => $token
             ], RestController::HTTP_OK); 
         }
         else
@@ -52,7 +52,7 @@ class Users extends RestController
             ], RestController::HTTP_BAD_REQUEST);
         }
     }
-
+// update
     public function index_put($id = 0)
     {
         $users = $this->model_user;
@@ -92,13 +92,17 @@ class Users extends RestController
             ], RestController::HTTP_BAD_REQUEST);
         }
     }
+
+    // inscription +verif
     public function user_post()
     {
         $jwt= new JWT();
-        $email = $this->put('email');
-        $password = $this->put('password');
+        $email = $this->post('email');
+        var_dump($email);
+        $password = $this->post('password');
 
         $user = $this->model_user->getLogin($email);
+        
 
         if(!empty($user))
         {
@@ -117,5 +121,12 @@ class Users extends RestController
         else{
             $this->response(['error email']);
         }
-    }
-} 
+    } 
+    
+//     public function Login_post() {
+
+//     echo"dddd";
+
+//  }
+}
+

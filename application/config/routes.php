@@ -57,3 +57,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['users(:num)'] = 'Users/$1';
 $route['event(:num)'] = 'Event/$1';
 $route['dance-category(:num)'] = 'Dance-Category/$1';
+$route['login'] = 'Users/user';
