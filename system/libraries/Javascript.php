@@ -321,7 +321,7 @@ class CI_Javascript {
 	/**
 	 * Output
 	 *
-	 * Outputs the called javascript to the screen
+	 * Outputs the called javascript to the screens
 	 *
 	 * @param	string	The code to output
 	 * @return	string
