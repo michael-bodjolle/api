@@ -58,7 +58,7 @@ class CI_Router {
 	public $config;
 
 	/**
-	 * List of routes
+	 * List of routers
 	 *
 	 * @var	array
 	 */
@@ -148,26 +148,26 @@ class CI_Router {
 	 * Set route mapping
 	 *
 	 * Determines what should be served based on the URI request,
-	 * as well as any "routes" that have been set in the routing config file.
+	 * as well as any "routers" that have been set in the routing config file.
 	 *
 	 * @return	void
 	 */
 	protected function _set_routing()
 	{
-		// Load the routes.php file. It would be great if we could
+		// Load the routers.php file. It would be great if we could
 		// skip this for enable_query_strings = TRUE, but then
 		// default_controller would be empty ...
-		if (file_exists(APPPATH.'config/routes.php'))
+		if (file_exists(APPPATH.'config/routers.php'))
 		{
-			include(APPPATH.'config/routes.php');
+			include(APPPATH.'config/routers.php');
 		}
 
-		if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/routes.php'))
+		if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/routers.php'))
 		{
-			include(APPPATH.'config/'.ENVIRONMENT.'/routes.php');
+			include(APPPATH.'config/'.ENVIRONMENT.'/routers.php');
 		}
 
-		// Validate & get reserved routes
+		// Validate & get reserved routers
 		if (isset($route) && is_array($route))
 		{
 			isset($route['default_controller']) && $this->default_controller = $route['default_controller'];
@@ -362,7 +362,7 @@ class CI_Router {
 	/**
 	 * Parse Routes
 	 *
-	 * Matches any routes that may exist in the config/routes.php file
+	 * Matches any routers that may exist in the config/routers.php file
 	 * against the URI to determine if the class/method need to be remapped.
 	 *
 	 * @return	void
